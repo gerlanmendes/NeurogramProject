@@ -70,9 +70,7 @@ variable "db_password" {
   sensitive   = true
 }
 
-#------------------------------------------------------
 # terraform.tfvars - Valores para as variáveis
-#------------------------------------------------------
 
 aws_region        = "us-east-1"
 project_name      = "terraform-aws-infra"
