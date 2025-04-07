@@ -1,5 +1,3 @@
-# variables.tf - Definição de variáveis
-
 variable "aws_region" {
   description = "Região da AWS onde a infraestrutura será provisionada"
   type        = string
