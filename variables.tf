@@ -1,49 +1,71 @@
 variable "aws_region" {
-  description = "Região da AWS onde a infraestrutura será provisionada"
+  description = "Região da AWS onde os recursos serão criados"
   type        = string
   default     = "us-east-1"
 }
 
+variable "default_tags" {
+  description = "Tags padrão para todos os recursos"
+  type        = map(string)
+  default = {
+    Project     = "terraform-aws-infra"
+    Environment = "dev"
+    ManagedBy   = "terraform"
+  }
+}
+
 variable "project_name" {
-  description = "Nome do projeto para identificar os recursos"
+  description = "Nome do projeto"
   type        = string
   default     = "terraform-aws-infra"
 }
 
-variable "vpc_cidr" {
+variable "environment" {
+  description = "Ambiente (dev, staging, prod)"
+  type        = string
+  default     = "dev"
+}
+
+variable "vpc_cidr_block" {
   description = "CIDR block para a VPC"
   type        = string
   default     = "10.0.0.0/16"
 }
 
-variable "public_subnet_cidr" {
-  description = "CIDR block para a subnet pública"
-  type        = string
-  default     = "10.0.1.0/24"
-}
-
-variable "private_subnet_cidr" {
-  description = "CIDR block para a subnet privada"
-  type        = string
-  default     = "10.0.2.0/24"
-}
-
 variable "availability_zone" {
-  description = "Zona de disponibilidade para os recursos"
+  description = "Availability Zone para os recursos"
   type        = string
   default     = "us-east-1a"
 }
 
 variable "instance_type" {
-  description = "Tipo da instância EC2"
+  description = "Tipo de instância EC2"
   type        = string
   default     = "t2.micro"
 }
 
 variable "key_name" {
-  description = "Nome da chave SSH para a instância EC2"
+  description = "Nome do par de chaves para a instância EC2"
   type        = string
-  default     = "my-key-pair"
+  default     = ""
+}
+
+variable "db_name" {
+  description = "Nome do banco de dados RDS"
+  type        = string
+  default     = "appdb"
+}
+
+variable "db_username" {
+  description = "Nome de usuário para o banco de dados RDS"
+  type        = string
+  default     = "dbadmin"
+}
+
+variable "db_password" {
+  description = "Senha para o banco de dados RDS"
+  type        = string
+  sensitive   = true
 }
 
 variable "db_instance_class" {
@@ -52,35 +74,8 @@ variable "db_instance_class" {
   default     = "db.t3.micro"
 }
 
-variable "db_name" {
-  description = "Nome do banco de dados"
+variable "bucket_suffix" {
+  description = "Sufixo para o nome do bucket S3 (deve ser globalmente único)"
   type        = string
-  default     = "appdb"
+  default     = "logs"
 }
-
-variable "db_username" {
-  description = "Nome do usuário administrador do banco de dados"
-  type        = string
-  default     = "dbadmin"
-}
-
-variable "db_password" {
-  description = "Senha do usuário administrador do banco de dados"
-  type        = string
-  sensitive   = true
-}
-
-# terraform.tfvars - Valores para as variáveis
-
-aws_region        = "us-east-1"
-project_name      = "terraform-aws-infra"
-vpc_cidr          = "10.0.0.0/16"
-public_subnet_cidr = "10.0.1.0/24"
-private_subnet_cidr = "10.0.2.0/24"
-availability_zone = "us-east-1a"
-instance_type     = "t2.micro"
-key_name          = "my-key-pair"
-db_instance_class = "db.t3.micro"
-db_name           = "appdb"
-db_username       = "dbadmin"
-# db_password = "Your-Secure-Password" # Recomendado fornecer via variável de ambiente ou parâmetro CLI
