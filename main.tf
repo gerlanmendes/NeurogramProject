@@ -1,4 +1,4 @@
-# VPC e componentes de rede
+#VPC e componentes de rede
 module "vpc" {
   source = "./modules/vpc"
 
@@ -8,7 +8,7 @@ module "vpc" {
   availability_zone = var.availability_zone
 }
 
-# IAM Roles e Policies
+#IAM Roles e Policies
 module "iam" {
   source = "./modules/iam"
 
@@ -17,7 +17,7 @@ module "iam" {
   bucket_name  = module.s3.bucket_name
 }
 
-# EC2 com Docker
+#EC2 com Docker
 module "ec2" {
   source = "./modules/ec2"
 
@@ -36,7 +36,7 @@ module "ec2" {
   depends_on = [module.vpc, module.rds, module.iam]
 }
 
-# RDS PostgreSQL
+#RDS PostgreSQL
 module "rds" {
   source = "./modules/rds"
 
@@ -53,7 +53,7 @@ module "rds" {
   depends_on = [module.vpc]
 }
 
-# S3 Bucket para Logs
+#S3 Bucket para Logs
 module "s3" {
   source = "./modules/s3"
 
