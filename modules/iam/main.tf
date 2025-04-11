@@ -1,4 +1,4 @@
-# Role para a instância EC2
+#Role para a instância EC2
 resource "aws_iam_role" "ec2_role" {
   name = "${var.project_name}-${var.environment}-ec2-role"
 
@@ -20,7 +20,7 @@ resource "aws_iam_role" "ec2_role" {
   }
 }
 
-# Política para acesso ao bucket S3
+#Política para acesso ao bucket S3
 resource "aws_iam_policy" "s3_access" {
   name        = "${var.project_name}-${var.environment}-s3-access-policy"
   description = "Permite acesso ao bucket S3 de logs"
@@ -44,19 +44,19 @@ resource "aws_iam_policy" "s3_access" {
   })
 }
 
-# Anexa a política à role
+#Anexa a política à role
 resource "aws_iam_role_policy_attachment" "s3_access_attachment" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = aws_iam_policy.s3_access.arn
 }
 
-# Perfil de instância
+#Perfil de instância
 resource "aws_iam_instance_profile" "ec2_profile" {
   name = "${var.project_name}-${var.environment}-ec2-profile"
   role = aws_iam_role.ec2_role.name
 }
 
-# Permite uso do SSM para gerenciamento remoto (opcional, mas recomendado)
+#Permite uso do SSM para gerenciamento remoto (opcional, mas recomendado)
 resource "aws_iam_role_policy_attachment" "ssm_managed_instance" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"

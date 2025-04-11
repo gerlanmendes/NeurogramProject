@@ -11,7 +11,7 @@ Este projeto provisiona uma infraestrutura completa na AWS utilizando Terraform,
 
 ## Diagrama de Arquitetura
 
-![Diagrama de Arquitetura](docs/architecture_diagram.png)
+![alt text](arqtf.png)
 
 ## Estrutura do Projeto
 
